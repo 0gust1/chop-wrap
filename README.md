@@ -11,10 +11,12 @@ It can turn this html
 
 ```html
 <div>
-    <p>Sur une branche morte</p>
-    <p>Les corbeaux se sont perchés</p>
-    <p>Soir d'automne</p>
-    <p><a href="https://fr.wikisource.org/wiki/Ha%C3%AFku">Bashō – XVIIe siècle</a></p>
+    <blockquote cite="https://fr.wikisource.org/wiki/Ha%C3%AFku"
+        <p>Sur une branche morte</p>
+        <p>Les corbeaux se sont perchés</p>
+        <p>Soir d'automne</p>
+        <p><a href="https://fr.wikisource.org/wiki/Ha%C3%AFku">Bashō – XVIIe siècle</a></p>
+    </blockquote>
 </div>
 ```
 
@@ -72,7 +74,7 @@ The two first functions (the chopper and the wrapper) can be redefined by your o
 
 ```javascript
 
-var textSlicer = require('../');
+var textSlicer = require('chop-wrap');
 
 var node = document.getElementById('wrap_words');
 node.normalize();
@@ -89,3 +91,11 @@ textSlicer.chopWrap([node],{
 });
 
 ```
+
+Currently you have 2 chopper functions available : `chopWords` and `chopChars`.
+
+Make a Pull request to add your own !
+
+
+
+
