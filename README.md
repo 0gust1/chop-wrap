@@ -2,7 +2,7 @@
 
 **A small browser module to recursively chop and wrap text nodes**
 
-* Vanilla CSS
+* Vanilla JS
 * IE>8
 
 Can be useful to animate text, transform DOM text nodes into something else or whatever.
@@ -70,7 +70,8 @@ The two first functions (the chopper and the wrapper) can be redefined by your o
 
 ## Usage
 
-``
+```javascript
+
 var textSlicer = require('../');
 
 var node = document.getElementById('wrap_words');
@@ -86,4 +87,5 @@ textSlicer.chopWrap([node],{
     wrapperFun: textSlicer.wrap,
     chopperFun: textSlicer.chopWords
 });
+
 ```
