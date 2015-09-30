@@ -70,6 +70,12 @@ function chopAndWrapProcessor(opts) {
     };
 }
 
+//https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace_in_the_DOM
+function is_all_ws( nod )
+{
+    // Use ECMA-262 Edition 3 String and RegExp features
+    return !(/[^\t\n\r ]/.test(nod.textContent));
+}
 
 /**
  * Process and transform recursively DOM text Nodes
@@ -88,12 +94,15 @@ textSlicer.processTextNodes = function processTextNodes(elements, processTextNod
             // have to get a reference before we replace the child node
             var nextSibling = child.nextSibling;
 
-            if (child.nodeType === 1) { // element node
-                textSlicer.processTextNodes([child], processTextNodeFun);
-            } else if (child.nodeType === 3) { // text node
-                var fragment = processTextNodeFun(child.textContent);
-                child.parentNode.replaceChild(fragment, child);
+            if(!is_all_ws(child)){
+                if (child.nodeType === 1) { // element node
+                    textSlicer.processTextNodes([child], processTextNodeFun);
+                } else if (child.nodeType === 3) { // text node
+                    var fragment = processTextNodeFun(child.textContent);
+                    child.parentNode.replaceChild(fragment, child);
+                }
             }
+
             child = nextSibling;
         }
     });
