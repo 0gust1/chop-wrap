@@ -6,7 +6,7 @@ var textSlicer = {};
  * @returns {string}
  */
 function internalTrim(text) {
-    return text.trim().replace(/\s{2,}/, ' ');
+  return text.trim().replace(/\s{2,}/, ' ');
 }
 
 /**
@@ -15,7 +15,7 @@ function internalTrim(text) {
  * @returns {Array}
  */
 textSlicer.chopWords = function chopWords(textContent) {
-    return internalTrim(textContent).split(/(\s+)/);
+  return internalTrim(textContent).split(/(\s+)/);
 };
 
 /**
@@ -24,7 +24,7 @@ textSlicer.chopWords = function chopWords(textContent) {
  * @returns {Array}
  */
 textSlicer.chopChars = function chopChars(textContent) {
-    return internalTrim(textContent).split('');
+  return internalTrim(textContent).split('');
 };
 
 /**
@@ -39,18 +39,18 @@ textSlicer.chopChars = function chopChars(textContent) {
  * @returns {DocumentFragment}
  */
 textSlicer.wrap = function wrap(tokens, flagContainerClass, wrapperTag, wrapperClass, selectionRegex, selectedClass) {
-    var d_ = window.document.createDocumentFragment();
+  var d_ = window.document.createDocumentFragment();
 
-    tokens.forEach(function (current) {
-        var tag = window.document.createElement(wrapperTag);
-        tag.innerHTML = current;
-        tag.classList.add(wrapperClass);
-        var reg = new RegExp(selectionRegex);
-        if (reg && reg.test(current)) tag.classList.add(selectedClass);
-        d_.appendChild(tag);
-    });
+  tokens.forEach(function(current) {
+    var tag = window.document.createElement(wrapperTag);
+    tag.innerHTML = current;
+    tag.classList.add(wrapperClass);
+    var reg = new RegExp(selectionRegex);
+    if (reg && reg.test(current)) tag.classList.add(selectedClass);
+    d_.appendChild(tag);
+  });
 
-    return d_;
+  return d_;
 };
 
 /**
@@ -60,21 +60,21 @@ textSlicer.wrap = function wrap(tokens, flagContainerClass, wrapperTag, wrapperC
  */
 function chopAndWrapProcessor(opts) {
 
-    return function(textcontent) {
-        return opts.wrapperFun(opts.chopperFun(textcontent),
-            opts.flagContainerClass,
-            opts.wrapperTag,
-            opts.wrapperClass,
-            opts.selectionRegex,
-            opts.selectedClass);
-    };
+  return function(textcontent) {
+    return opts.wrapperFun(opts.chopperFun(textcontent),
+        opts.flagContainerClass,
+        opts.wrapperTag,
+        opts.wrapperClass,
+        opts.selectionRegex,
+        opts.selectedClass);
+  };
 }
 
 //https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace_in_the_DOM
-function is_all_ws( nod )
+function isAllWS(node)
 {
-    // Use ECMA-262 Edition 3 String and RegExp features
-    return !(/[^\t\n\r ]/.test(nod.textContent));
+  // Use ECMA-262 Edition 3 String and RegExp features
+  return !(/[^\t\n\r ]/.test(node.textContent));
 }
 
 /**
@@ -83,59 +83,58 @@ function is_all_ws( nod )
  * @param processTextNodeFun {function} function using the textContent of a DOM node and returning a documentFragment
  * @param flagContainerClass {String}, flagContainerClass
  */
-textSlicer.processTextNodes = function processTextNodes(elements, processTextNodeFun,flagContainerClass) {
+textSlicer.processTextNodes = function processTextNodes(elements, processTextNodeFun, flagContainerClass) {
 
-    elements.forEach(function (element) {
-        element.normalize();
-        //element.classList.add(flagContainerClass);
-        var child = element.firstChild;
-        while (child) {
-            // have to get a reference before we replace the child node
-            var nextSibling = child.nextSibling;
-            if(!is_all_ws(child)){
-                if (child.nodeType === 1) { // element node
-                    textSlicer.processTextNodes([child], processTextNodeFun);
-                } else if (child.nodeType === 3) { // text node
-                    var fragment = processTextNodeFun(child.textContent);
-                    child.parentNode.replaceChild(fragment, child);
-                }
-            }
-            child = nextSibling;
+  elements.forEach(function(element) {
+    element.normalize();
+
+    //element.classList.add(flagContainerClass);
+    var child = element.firstChild;
+    while (child) {
+      // have to get a reference before we replace the child node
+      var nextSibling = child.nextSibling;
+      if (!isAllWS(child)) {
+        if (child.nodeType === 1) { // element node
+          textSlicer.processTextNodes([child], processTextNodeFun);
+        } else if (child.nodeType === 3) { // text node
+          var fragment = processTextNodeFun(child.textContent);
+          child.parentNode.replaceChild(fragment, child);
         }
-    });
+      }
+
+      child = nextSibling;
+    }
+  });
 };
 
-
 function mergeObjects() {
-    var resObj = {};
+  var resObj = {};
 
-    Array.prototype.slice.call(arguments).forEach(function (e) {
-        var keys = Object.keys(e);
-        keys.forEach(function (k) {
-            resObj[k] = e[k];
-        });
+  Array.prototype.slice.call(arguments).forEach(function(e) {
+    var keys = Object.keys(e);
+    keys.forEach(function(k) {
+      resObj[k] = e[k];
     });
+  });
 
-    return resObj;
+  return resObj;
 }
 
 var defaultChopWrapOptions = {
 
-    flagContainerClass: 'wrapped',
-    wrapperTag: 'span',
-    wrapperClass: 'wrap',
-    selectionRegex: '\\S+',
-    selectedClass: 'wrap--selected',
-    wrapperFun: textSlicer.wrap,
-    chopperFun: textSlicer.chopWords
+  flagContainerClass: 'wrapped',
+  wrapperTag: 'span',
+  wrapperClass: 'wrap',
+  selectionRegex: '\\S+',
+  selectedClass: 'wrap--selected',
+  wrapperFun: textSlicer.wrap,
+  chopperFun: textSlicer.chopWords,
 };
 
-
-textSlicer.chopWrap = function (elements, options) {
-    var opts = mergeObjects(defaultChopWrapOptions, options ? options : {});
-    var textNodeProcessor = chopAndWrapProcessor(opts);
-    textSlicer.processTextNodes(elements, textNodeProcessor, opts.flagContainerClass);
+textSlicer.chopWrap = function(elements, options) {
+  var opts = mergeObjects(defaultChopWrapOptions, options ? options : {});
+  var textNodeProcessor = chopAndWrapProcessor(opts);
+  textSlicer.processTextNodes(elements, textNodeProcessor, opts.flagContainerClass);
 };
-
 
 module.exports = textSlicer;

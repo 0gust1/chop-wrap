@@ -4,6 +4,7 @@
   "description": "A browser module to recursively chop and wrap text nodes",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint index.js && jscs index.js",
     "test": "node_modules/browserify/bin/cmd.js ./test/browser-test.js -d | node_modules/jsdom-eval/cli.js --html ./test/index.html | node_modules/faucet/bin/cmd.js",
     "start": "budo demo.js:bundle.js --live | garnish",
     "dev": "budo demo.js:bundle.js --live | garnish",
