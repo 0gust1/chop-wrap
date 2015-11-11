@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="fr"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="fr"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="fr"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="fr"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+        body {
+            background-color: rgba(41, 81, 109, 1);
+            color: rgba(3, 33, 55, 1);
+            font-family: sans-serif;
+            width:100vw;
+            overflow-x:hidden;
+            perspective: 10000px;
+        }
+
+        .main{
+            width:25em;
+            margin:0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgba(112, 142, 164, 1);
+        }
+
+        h1 small{
+            display: block;
+            font-variant: small-caps;
+            font-weight: normal;
+        }
+
+        h2 {
+            font-size: 1em;
+            font-weight: lighter;
+            color: rgba(112, 142, 164, 1);
+        }
+
+        button {
+            position:relative;
+            margin: 0 0 0 2.5em;
+            font-size: 0.5em;
+            padding: 1em;
+            background-color: rgba(3, 33, 55, 1);
+            color: rgba(112, 142, 164, 1);
+            border:none;
+        }
+        button:active{top:1px;}
+
+        .rgba-primary-0 {
+            color: rgba(41, 81, 109, 1)
+        }
+
+        /* Main Primary color */
+        .rgba-primary-1 {
+            color: rgba(112, 142, 164, 1)
+        }
+
+        .rgba-primary-2 {
+            color: rgba(72, 110, 136, 1)
+        }
+
+        .rgba-primary-3 {
+            color: rgba(18, 55, 82, 1)
+        }
+
+        .rgba-primary-4 {
+            color: rgba(3, 33, 55, 1)
+        }
+
+        .main {
+            font-size: 2em;
+            padding: 4em;
+        }
+
+        .wrap {
+            position: relative;
+            background-color: rgba(72, 110, 136, 1);
+        }
+
+        .wrap--selected {
+            background-color: rgba(112, 142, 164, 1);
+        }
+
+        .wrap--selected:before {
+            content: '•';
+            color: tomato;
+            font-size: 0.75em;
+            position: absolute;
+            top: -0.5em;
+            left: 0;
+        }
+
+        .author_link {
+            font-size: 0.6em;
+        }
+
+        .animate{}
+
+
+        .wrap {
+            transition: all 1.5s ease-out;
+            transform: none;
+
+        }
+
+        .wrap--selected {
+            display: inline-block;
+        }
+
+        .wrap--selected:nth-of-type(3n){
+
+        }
+        .wrap--selected:nth-of-type(5n){
+
+        }
+
+        .wrap.animate-in {
+            position: relative;
+            line-height: 1em;
+            display: inline-block;
+            transform: translateX(-100em) rotateY(-200deg) rotateZ(360deg) scale3D(2, 2, 2);
+            /*animation : envol1 2.5s ease-in 1; animation-fill-mode: both;*/
+        }
+
+        .wrap.animate-in:nth-of-type(3n) {
+            /*animation : envol2 2.5s ease-in 1; animation-fill-mode: both;*/
+            transform: translateX(-100em) translateX(5em) rotateY(360deg) rotateZ(-470deg) scale3D(3, 3, 3);
+        }
+
+        .wrap.animate-in:nth-of-type(5n) {
+            /*animation : envol3 2.5s ease-in 1; animation-fill-mode: both;*/
+            transform: translateX(-100em) translateX(-5em) rotateY(250deg) rotateZ(-256deg) scale3D(3, 3, 3);
+        }
+
+        .wrap.animate-out {
+            position: relative;
+            line-height: 1em;
+            display: inline-block;
+            transform: translateX(100em) rotateY(-200deg) rotateZ(360deg) scale3D(2, 2, 2);
+            /*animation : envol1 2.5s ease-in 1; animation-fill-mode: both;*/
+        }
+
+        .wrap.animate-out:nth-of-type(3n) {
+            /*animation : envol2 2.5s ease-in 1; animation-fill-mode: both;*/
+            transform: translateX(100em) translateX(5em) rotateY(360deg) rotateZ(-470deg) scale3D(3, 3, 3);
+        }
+
+        .wrap.animate-out:nth-of-type(5n) {
+            /*animation : envol3 2.5s ease-in 1; animation-fill-mode: both;*/
+            transform: translateX(100em) translateX(-5em) rotateY(250deg) rotateZ(-256deg) scale3D(3, 3, 3);
+        }
+
+
+    </style>
+</head>
+<body>
+<!--[if lt IE 9]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<h1>Chop-wrap <small>transform your text nodes</small></h1>
+
+
+
+<article class="main">
+
+    <p>A small browser module to apply transformations to DOM text nodes</p>
+
+    <p>By default, it can recursively chop words or letters and wrap them in a custom tag</p>
+
+    <ul>
+        <li>Vanilla JS</li>
+        <li>IE>8</li>
+    </ul>
+
+    <p>
+        Can be useful to animate text, transform DOM text nodes into something else or whatever.
+    </p>
+
+    <p>Enough talk, a little demo (with the help of velocity.js for animations)</p>
+
+
+    <h2>Words
+    <small>(not really, only chars groups)</small>
+    </h2>
+
+
+    <div id="wrap_words" class="animate-words">
+        <blockquote cite="https://fr.wikisource.org/wiki/Ha%C3%AFku">
+            <p>Sur une branche morte</p>
+
+            <p>Les corbeaux se sont perchés</p>
+
+            <p>Soir d'automne</p>
+
+            <p class="author_link"><a href="https://fr.wikisource.org/wiki/Ha%C3%AFku">Bashō – XVIIe siècle</a></p>
+        </blockquote>
+    </div>
+
+    <button class="btn-animate-words" type="button">Animate</button>
+    <button class="btn-animate-words2" type="button">Animate</button>
+
+    <h2>Letters</h2>
+
+    <div id="wrap_chars" class="animate-letters">
+        <blockquote cite="https://fr.wikisource.org/wiki/Ha%C3%AFku">
+            <p>Sur une branche morte</p>
+
+            <p>Les corbeaux se sont perchés</p>
+
+            <p>Soir d'automne</p>
+
+            <p class="author_link"><a href="https://fr.wikisource.org/wiki/Ha%C3%AFku">Bashō – XVIIe siècle</a></p>
+        </blockquote>
+    </div>
+
+    <button class="btn-animate-letters" type="button">Animate</button>
+    <button class="btn-animate-letters2" type="button">Animate</button>
+
+</article>
+
+
+<script src="bundle.js"></script>
+
+</body>
+</html>

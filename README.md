@@ -5,6 +5,8 @@
 * Vanilla JS
 * IE>8
 
+By default, it can recursively chop words or letters and wrap them in a custom tag.
+
 Can be useful to animate text, transform DOM text nodes into something else or whatever.
 
 It can turn this html
@@ -24,7 +26,7 @@ in
 
 ```html
 
-    <div>
+    <div class="wrapped">
 
         <blockquote cite="https://fr.wikisource.org/wiki/Ha%C3%AFku"><span class="wrap"></span>
 
@@ -72,29 +74,46 @@ The two first functions (the chopper and the wrapper) can be redefined by your o
 
 ## Usage
 
+
 ```javascript
 
 var textSlicer = require('chop-wrap');
 
 var node = document.getElementById('wrap_words');
-node.normalize();
-console.log(node.textContent);
 
-textSlicer.chopWrap([node],{
-    flagContainerClass: 'wrapped',
-    wrapperTag: 'span',
-    wrapperClass: 'wrap',
-    selectionRegex: '\\S+',
-    selectedClass: 'wrap--selected',
-    wrapperFun: textSlicer.wrap,
-    chopperFun: textSlicer.chopWords
-});
+textSlicer.chopWrap([node]);
+
+```
+
+It can take an optional option object.
+
+```javascript
+
+var textSlicer = require('chop-wrap');
+
+var node = document.getElementById('wrap_words');
+
+textSlicer.chopWrap([node],
+                    {
+                        flagContainerClass: 'wrapped',
+                        wrapperTag: 'span',
+                        wrapperClass: 'wrap',
+                        selectionRegex: '\\S+',
+                        selectedClass: 'wrap--selected',
+                        wrapperFun: textSlicer.wrap,
+                        chopperFun: textSlicer.chopWords
+                    });
 
 ```
 
 Currently you have 2 chopper functions available : `chopWords` and `chopChars`.
 
 Make a Pull request to add your own !
+
+## Build
+
+Run `npm run dev` to launch the dev server
+
 
 
 

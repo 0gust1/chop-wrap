@@ -39,10 +39,10 @@ textSlicer.chopChars = function chopChars(textContent) {
  * @returns {DocumentFragment}
  */
 textSlicer.wrap = function wrap(tokens, flagContainerClass, wrapperTag, wrapperClass, selectionRegex, selectedClass) {
-    var d_ = document.createDocumentFragment();
+    var d_ = window.document.createDocumentFragment();
 
     tokens.forEach(function (current) {
-        var tag = document.createElement(wrapperTag);
+        var tag = window.document.createElement(wrapperTag);
         tag.innerHTML = current;
         tag.classList.add(wrapperClass);
         var reg = new RegExp(selectionRegex);
@@ -89,11 +89,9 @@ textSlicer.processTextNodes = function processTextNodes(elements, processTextNod
         element.normalize();
         //element.classList.add(flagContainerClass);
         var child = element.firstChild;
-
         while (child) {
             // have to get a reference before we replace the child node
             var nextSibling = child.nextSibling;
-
             if(!is_all_ws(child)){
                 if (child.nodeType === 1) { // element node
                     textSlicer.processTextNodes([child], processTextNodeFun);
@@ -102,7 +100,6 @@ textSlicer.processTextNodes = function processTextNodes(elements, processTextNod
                     child.parentNode.replaceChild(fragment, child);
                 }
             }
-
             child = nextSibling;
         }
     });

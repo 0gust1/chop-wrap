@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node_modules/browserify/bin/cmd.js ./test/browser-test.js -d | node_modules/jsdom-eval/cli.js --html ./test/index.html | node_modules/faucet/bin/cmd.js",
-    "dev": "gulp dev & watchify test/index.src.js -o test/index.js -v",
+    "start": "budo demo.js:bundle.js --live | garnish",
+    "dev": "budo demo.js:bundle.js --live | garnish",
     "build": ""
   },
   "repository": {
@@ -28,22 +29,12 @@
     "faucet": "0.0.1",
     "gulp": "^3.9.0",
     "http": "0.0.0",
+    "jsdom": "^6.5.1",
     "jsdom-eval": "^0.2.5",
     "opn": "^3.0.2",
     "serve-static": "^1.10.0",
     "tape": "^4.2.0",
+    "velocity-animate": "^1.2.3",
     "watchify": "^3.4.0"
-  },
-  "testling": {
-    "html": "test/index.html",
-    "browsers": [
-      "ie/6..latest",
-      "chrome/20..latest",
-      "firefox/10..latest",
-      "safari/latest",
-      "opera/11.0..latest",
-      "iphone/6",
-      "ipad/6"
-    ]
   }
 }
