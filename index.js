@@ -10,16 +10,15 @@ function internalTrim(text) {
 }
 
 /**
- * Splits a string into a trimmed array of 'words' (characters between spaces)
+ * Splits a string into a trimmed array of sentences (characters between spaces)
  * @param textContent
  * @returns {Array}
  */
 textSlicer.chopSentences = function chopSentences(textContent) {
-  var tokens = internalTrim(textContent).split(/([^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$))/);
+  return internalTrim(textContent).split(/([^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$))/);
 
-  //(?=\S)(([.]{2,})?[^!?]+?([.…!?]+|(?=\s+$)|$)(\s*[′’'”″“")»]+)*)
-  //[^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$)
-  return tokens;
+  //1  (?=\S)(([.]{2,})?[^!?]+?([.…!?]+|(?=\s+$)|$)(\s*[′’'”″“")»]+)*)
+  //2  [^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$)
 };
 
 /**
@@ -141,7 +140,7 @@ var defaultChopWrapOptions = {
   selectionRegex: '\\S+',
   selectedClass: 'wrap--selected',
   wrapperFun: textSlicer.wrap,
-  chopperFun: textSlicer.chopWords
+  chopperFun: textSlicer.chopWords,
 };
 
 textSlicer.chopWrap = function(elements, options) {
