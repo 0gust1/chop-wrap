@@ -65,8 +65,8 @@ in
 
 ## Principle :
 
-* a function to transform the content of a text node into an array of tokens
-* a function to wrap an array of token into tags, returning an HTML fragment
+* a function to transform the content of a text node into an array of tokens : `String -> [String]`
+* a function to wrap an array of token into tags, returning an HTML fragment `[String] -> DocumentFragment`
 * a function to recursively walk down the DOM and applying the two composited functions above
 
 The two first functions (the chopper and the wrapper) can be redefined by your own ones.
