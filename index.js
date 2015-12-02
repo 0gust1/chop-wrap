@@ -14,6 +14,19 @@ function internalTrim(text) {
  * @param textContent
  * @returns {Array}
  */
+textSlicer.chopSentences = function chopSentences(textContent) {
+  var tokens = internalTrim(textContent).split(/([^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$))/);
+
+  //(?=\S)(([.]{2,})?[^!?]+?([.…!?]+|(?=\s+$)|$)(\s*[′’'”″“")»]+)*)
+  //[^.!?\s][^.!?]*(?:[.!?](?!['"]?\s|$)[^.!?]*)*[.!?]?['"]?(?=\s|$)
+  return tokens;
+};
+
+/**
+ * Splits a string into a trimmed array of 'words' (characters between spaces)
+ * @param textContent
+ * @returns {Array}
+ */
 textSlicer.chopWords = function chopWords(textContent) {
   return internalTrim(textContent).split(/(\s+)/);
 };
@@ -88,7 +101,7 @@ textSlicer.processTextNodes = function processTextNodes(elements, processTextNod
   elements.forEach(function(element) {
     element.normalize();
 
-    //element.classList.add(flagContainerClass);
+    element.classList.add(flagContainerClass);
     var child = element.firstChild;
     while (child) {
       // have to get a reference before we replace the child node
@@ -128,7 +141,7 @@ var defaultChopWrapOptions = {
   selectionRegex: '\\S+',
   selectedClass: 'wrap--selected',
   wrapperFun: textSlicer.wrap,
-  chopperFun: textSlicer.chopWords,
+  chopperFun: textSlicer.chopWords
 };
 
 textSlicer.chopWrap = function(elements, options) {

@@ -1,3 +1,4 @@
+'use strict';
 const textSlicer = require('./');
 const Velocity = require('velocity-animate');
 require('velocity-animate/velocity.ui.js');
@@ -17,6 +18,7 @@ textSlicer.chopWrap([node],{
 
 
 const node2 = document.getElementById('wrap_chars');
+const node3 = document.getElementById('wrap_sentences');
 
 textSlicer.chopWrap([node2],{
     flagContainerClass: 'wrapped',
@@ -28,24 +30,31 @@ textSlicer.chopWrap([node2],{
     chopperFun: textSlicer.chopChars
 });
 
+textSlicer.chopWrap([node3],{
+    flagContainerClass: 'wrapped',
+    wrapperTag: 'span',
+    wrapperClass: 'wrap',
+    selectionRegex: '\\S+',
+    selectedClass: 'wrap--selected',
+    wrapperFun: textSlicer.wrap,
+    chopperFun: textSlicer.chopSentences
+});
+
+/*
+textSlicer.chopWrap([node3],{
+    flagContainerClass: 'wrapped',
+    wrapperTag: 'span',
+    wrapperClass: 'wrap',
+    selectionRegex: '\\S+',
+    selectedClass: 'wrap--selected',
+    wrapperFun: textSlicer.wrap,
+    chopperFun: textSlicer.chopSentences
+});
+*/
+
+
 document.querySelector('.btn-animate-letters').addEventListener("click", () => {
     //removeDelayedClass('animate-letters','wrap--selected','animate-in',700);
-
-
-    function randomAnim(){
-        const angle = Math.random()*360;
-        //const rotateX = Math.random()*360;
-        //const rotateY =Math.random()*360;
-        //const scale = Math.random()*3;
-
-        return {
-            translateX: Math.cos(angle)*100+"em",
-            translateY: Math.sin(angle)*100+"em"
-            //rotateY: rotateY,
-            //rotateZ: rotateY,
-            //scale3D: scale
-        };
-    }
 
     const transforms = [
         {
@@ -72,8 +81,8 @@ document.querySelector('.btn-animate-letters').addEventListener("click", () => {
 
     delayedVelocity('animate-letters',
                 'wrap--selected',
-                600,
-                100);
+                1000,
+                1000);
 });
 
 document.querySelector('.btn-animate-words').addEventListener("click", () => {
@@ -90,16 +99,21 @@ document.querySelector('.btn-animate-words2').addEventListener("click",  () =>  
 
 function randomAnim(){
         const angle = Math.random()*360;
-        //const rotateX = Math.random()*360;
-        //const rotateY =Math.random()*360;
+        const rotateX = Math.random()*720;
+        const rotateY =Math.random()*720;
+        const rotateZ =Math.random()*720;
         //const scale = Math.random()*3;
 
         return {
             translateX: Math.cos(angle)*100+"em",
-            translateY: Math.sin(angle)*100+"em"
+            translateY: Math.sin(angle)*100+"em",
+            rotateX: rotateX+"deg",
+            rotateY: rotateY+"deg",
+            rotateZ: rotateZ+"deg",
             //rotateY: rotateY,
             //rotateZ: rotateY,
-            //scale3D: scale
+            //scale3D: scale3D
+            //
         };
     }
 
