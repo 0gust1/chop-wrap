@@ -74,6 +74,7 @@ The two first functions (the chopper and the wrapper) can be redefined by your o
 
 ## Usage
 
+With a JS packer (browserify, Webpack, etc.)
 
 ```javascript
 
@@ -95,18 +96,18 @@ var node = document.getElementById('wrap_words');
 
 textSlicer.chopWrap([node],
                     {
-                        flagContainerClass: 'wrapped',
+                        flagContainerClass: 'wrapped', //applied to container
                         wrapperTag: 'span',
-                        wrapperClass: 'wrap',
-                        selectionRegex: '\\S+',
-                        selectedClass: 'wrap--selected',
-                        wrapperFun: textSlicer.wrap,
-                        chopperFun: textSlicer.chopWords
+                        wrapperClass: 'wrap', //class of a wrapped elem
+                        selectionRegex: '\\S+', //here, "everything but spaces"
+                        selectedClass: 'wrap--selected', //applied if the regex is satisfied
+                        wrapperFun: textSlicer.wrap, // Array<string> => DocumentFragment
+                        chopperFun: textSlicer.chopWords // string => Array<string>
                     });
 
 ```
 
-Currently you have 2 chopper functions available : `chopWords` and `chopChars`.
+Currently you have 3 chopper functions available : `chopWords`, `chopChars` and `chopSentences`.
 
 Make a Pull request to add your own !
 
