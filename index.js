@@ -107,7 +107,7 @@ textSlicer.processTextNodes = function processTextNodes(elements, processTextNod
       var nextSibling = child.nextSibling;
       if (!isAllWS(child)) {
         if (child.nodeType === 1) { // element node
-          textSlicer.processTextNodes([child], processTextNodeFun);
+          textSlicer.processTextNodes([child], processTextNodeFun, flagContainerClass);
         } else if (child.nodeType === 3) { // text node
           var fragment = processTextNodeFun(child.textContent);
           child.parentNode.replaceChild(fragment, child);
