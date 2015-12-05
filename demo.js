@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 const textSlicer = require('./');
 const Velocity = require('velocity-animate');
@@ -76,7 +77,7 @@ document.querySelector('.btn-animate-letters').addEventListener('click', () => {
    * translateX(-100em) translateX(-5em) rotateY(250deg) rotateZ(-256deg) scale3D(3, 3, 3)
    * */
 
-  delayedVelocity('animate-letters', 'wrap--selected', 1000, 1000);
+  delayedAnim('animate-letters', 'wrap--selected', 1000, 1000);
 
 });
 
@@ -114,6 +115,10 @@ function randomAnim() {
   };
 }
 
+function getRandomAnims(num){
+  return Array.from(new Array(6), () => randomAnim());
+}
+
 /**
  * Triggers animation on elements, with a random on-set delay
  * @param {String} containerClass
@@ -123,13 +128,15 @@ function randomAnim() {
  */
 function triggerDelayedClass(containerClass, wrapperClass, animClass, durationMax) {
   const elements = document.querySelectorAll('.' + containerClass + ' .' + wrapperClass);
-  for (var i = elements.length - 1; i >= 0; i--) {
+
+  Array.from(elements, e  => {
     (function triggerAnim(el) {
       setTimeout(function() {
         el.classList.add(animClass);
       }, Math.random() * durationMax);
-    })(elements[i]);
-  }
+    })(e);
+  });
+
 }
 
 /**
@@ -142,36 +149,38 @@ function triggerDelayedClass(containerClass, wrapperClass, animClass, durationMa
 function removeDelayedClass(containerClass, wrapperClass, animClass, durationMax) {
   const elements = document.querySelectorAll('.' + containerClass + ' .' + wrapperClass);
 
-  for (var i = elements.length - 1; i >= 0; i--) {
+  Array.from(elements, e => {
     (function triggerAnim(el) {
       setTimeout(function() {
         el.classList.remove(animClass);
       }, Math.random() * durationMax);
-    })(elements[i]);
-  }
+    })(e);
+  });
+
 }
 
-function delayedAnim(containerClass, wrapperClass, transforms, duration, delayMax) {
+function delayedAnim(containerClass, wrapperClass, duration, delayMax) {
   const elements = document.querySelectorAll('.' + containerClass + ' .' + wrapperClass);
 
-  for(let elem of elements) {
-
+  Array.from(elements, e =>{
     (function triggerAnim(el) {
       setTimeout(function () {
-
         Velocity(el, randomAnim(), duration);
-
       }, Math.random() * delayMax);
-    })(elem);
+    })(e);
+  });
 
-  }
 }
 
 function delayedVelocity(containerClass, wrapperClass, duration, delayMax) {
-  const elements = document.querySelectorAll('.' + containerClass + ' .' + wrapperClass);
-  for (var i = elements.length - 1; i >= 0; i--) {
-    Velocity(elements[i], randomAnim(), {duration: duration, delay: Math.random() * delayMax});
-  }
+  const elements = document.querySelectorAll('.' + containerClass + ' .' + wrapperClass),
+        num = 10,
+        anims = getRandomAnims(num);
+
+  Array.from(elements, e => {
+    Velocity(e, anims[Math.floor(Math.random()*num)], {duration: duration, delay: Math.random() * delayMax});
+  });
+
 }
 
 
